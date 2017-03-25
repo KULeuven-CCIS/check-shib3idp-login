@@ -2,8 +2,8 @@ package main
 
 import (
 	"net/url"
-	"time"
 	"regexp"
+	"time"
 	//"github.com/nxadm/surf" // Forking for upstream PR
 	"gopkg.in/headzoo/surf.v1"
 )

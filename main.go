@@ -16,7 +16,7 @@ const UNKNOWN = 3
 /* Application defaults */
 const author = "Claudio Ramirez <pub.claudio@gmail.com>"
 const repo = "https://github.com/nxadm/check-shib3idp-login"
-const warning = 5  // timeout seconds
+const warning = 5   // timeout seconds
 const critical = 20 // timeout seconds
 const version = "0.1.0"
 

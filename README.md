@@ -21,8 +21,8 @@ Author: Claudio Ramirez <pub.claudio@gmail.com>.
 
 Usage:
   check-shib3idp-login
-  	-f <file>
-  	[-w <threshold> -c <threshold>]
+      -f <file>
+      [-w <threshold> -c <threshold>]
   check-shib3idp-login -s
   check-shib3idp-login -h
   check-shib3idp-login --version
@@ -30,12 +30,12 @@ Usage:
 Options:
   -f <file>       Configuration file
   -w <threshold>  Threshold for warning state in seconds
-  		  [default:5]
+                  [default:5]
   -c <threshold>  Threshold for critical state in seconds
-  		  [default:20]
-  -s		  Print a sample YAML configuration file to STDOUT
-  -h, --help  	  Show this screen
-  --version   	  Show version
+                  [default:20]
+  -s              Print a sample YAML configuration file to STDOUT
+  -h, --help      Show this screen
+  --version       Show version
 ```
 
 Examples:
