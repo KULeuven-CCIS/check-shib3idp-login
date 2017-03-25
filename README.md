@@ -43,12 +43,18 @@ Examples:
 ```
 $ check-shib3idp-login -f config.yaml
 [OK] Threshold (w:5,c:20), transaction performed in 1.216901 seconds: login is OK.
+$ echo $?
+0
 
 $ check-shib3idp-login -f config.yaml -c 1
 [CRITICAL] Threshold (w:5,c:1), transaction performed in 1.169114 seconds: login is too slow.
+$ echo $?
+2
 
 $ check-shib3idp-login -f config.yaml -c 10 -w 1
 [WARNING] Threshold (w:1,c:10), transaction performed in 1.183457 seconds: login is slow.
+$ echo $?
+1
 ```
 
 ## Configuration
