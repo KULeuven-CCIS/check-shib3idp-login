@@ -63,3 +63,55 @@ func main() {
 
 	}
 }
+
+// Refactor:
+//package main
+//
+//import (
+//"fmt"
+//"os"
+//)
+//
+//const (
+//	OK = iota
+//	WARNING
+//	CRITICAL
+//	UNKNOWN
+//)
+//
+//var rmap = map[int]string{
+//	OK:       "OK",
+//	WARNING:  "WARNING",
+//	CRITICAL: "CRITICAL",
+//	UNKNOWN:  "UNKNOWN",
+//}
+//
+//type Result struct {
+//	Code    int
+//	Elapsed float64
+//	Msg     string
+//}
+//
+//type Params struct {
+//	ConfigFile string
+//	Critical   int
+//	Warning    int
+//}
+//
+//func login() (Result, error) {
+//	var res Result
+//	res.Code = 0
+//	res.Elapsed = 0
+//	res.Msg = "blah"
+//	return res, nil
+//}
+//func main() {
+//	var params Params
+//	res, err := login()
+//	if err != nil {
+//		fmt.Println("[UNKNOWN] Error while executing the login")
+//		os.Exit(UNKNOWN)
+//	}
+//	fmt.Printf("[%s] Threshold (w:%d,c:%d), transaction performed in %f seconds: %s\n",
+//		rmap[res.Code], params.Warning, params.Critical, res.Elapsed, res.Msg)
+//}
