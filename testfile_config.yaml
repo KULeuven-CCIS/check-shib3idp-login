@@ -2,7 +2,6 @@
 ### check-shib3idp-login configuration ###
 username: "some_user"
 password: "some_password"
-unsollicited_login_baseurl: "https://idp.example.com/idp/profile/SAML2/Unsolicited/SSO"
-logout_url: "https://idp.example.com/idp/profile/Logout"
-service_provider_entity_id: "https://sp.example.com"
-service_provider_post_binding_url: "https://sp.example.com/Shibboleth.sso/SAML2/POST"
+unsolicited_login_baseurl: "https://idp.example.com/idp/profile/SAML2/Unsolicited/SSO"
+provider_id: "https://sp.example.com"
+shire: "https://sp.example.com/Shibboleth.sso/SAML2/POST"

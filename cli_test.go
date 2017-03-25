@@ -7,8 +7,8 @@ import (
 
 var defaultsTest = Defaults{
 	Author:   author,
-	Warning:  warningThreshold,
-	Critical: criticalThreshold,
+	Warning:  warning,
+	Critical: critical,
 	Version:  version,
 }
 
