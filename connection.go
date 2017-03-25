@@ -1,10 +1,11 @@
 package main
 
 import (
-	"gopkg.in/headzoo/surf.v1"
 	"net/url"
-	"regexp"
 	"time"
+	"regexp"
+	_"github.com/nxadm/surf"
+	"gopkg.in/headzoo/surf.v1"
 )
 
 func login(config Config, params Params, defaults Defaults) (int, float64, string) {
@@ -15,6 +16,7 @@ func login(config Config, params Params, defaults Defaults) (int, float64, strin
 	unsolicitedUrl :=
 		config.LoginBaseURL + "?providerId=" + escapedSpEntityID + "&shire=" + escapedSpPostBindingURL
 	browser := surf.NewBrowser()
+	//browser.SetTimeout(time.Duration(1))
 	browser.SetUserAgent("check-shib3idp-login/" + defaults.Version)
 
 	// Open it
