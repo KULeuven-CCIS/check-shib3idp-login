@@ -84,8 +84,8 @@ Author: ` + defaults.Author + `.
 
 Usage:
   check-shib3idp-login
-  	-f <file>
-  	[-w <threshold> -c <threshold>]
+      -f <file>
+      [-w <threshold> -c <threshold>]
   check-shib3idp-login -s
   check-shib3idp-login -h
   check-shib3idp-login --version
@@ -93,12 +93,12 @@ Usage:
 Options:
   -f <file>       Configuration file
   -w <threshold>  Threshold for warning state in seconds
-  		  [default:` + fmt.Sprintf("%d", defaults.Warning) + `]
+                  [default:` + fmt.Sprintf("%d", defaults.Warning) + `]
   -c <threshold>  Threshold for critical state in seconds
-  		  [default:` + fmt.Sprintf("%d", defaults.Critical) + `]
-  -s		  Print a sample YAML configuration file to STDOUT
-  -h, --help  	  Show this screen
-  --version   	  Show version
+                  [default:` + fmt.Sprintf("%d", defaults.Critical) + `]
+  -s              Print a sample YAML configuration file to STDOUT
+  -h, --help      Show this screen
+  --version       Show version
 `
 	args, _ := docopt.Parse(usage, nil, true, versionMsg, false)
 	return args
