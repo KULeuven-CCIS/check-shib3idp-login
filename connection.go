@@ -4,7 +4,7 @@ import (
 	"net/url"
 	"time"
 	"regexp"
-	_"github.com/nxadm/surf"
+	//"github.com/nxadm/surf" // Forking for upstream PR
 	"gopkg.in/headzoo/surf.v1"
 )
 
@@ -16,14 +16,15 @@ func login(config Config, params Params, defaults Defaults) (int, float64, strin
 	unsolicitedUrl :=
 		config.LoginBaseURL + "?providerId=" + escapedSpEntityID + "&shire=" + escapedSpPostBindingURL
 	browser := surf.NewBrowser()
-	//browser.SetTimeout(time.Duration(1))
+	// Add timeout if upstream PR merged: https://github.com/headzoo/surf/pull/52
+	//browser.SetTimeout(time.Duration(params.Critical) * time.Second)
 	browser.SetUserAgent("check-shib3idp-login/" + defaults.Version)
 
 	// Open it
 	start := time.Now()
 	err := browser.Open(unsolicitedUrl)
 	if err != nil {
-		return CRITICAL, time.Since(start).Seconds(), err.Error()
+		return CRITICAL, time.Since(start).Seconds(), "Connection failed or time out reached"
 	}
 
 	// Submit intermediate pag
@@ -72,7 +73,7 @@ func login(config Config, params Params, defaults Defaults) (int, float64, strin
 		msg = "login is slow"
 		nagiosCode = WARNING
 	default:
-		msg = "everything is OK"
+		msg = "login is OK"
 		nagiosCode = OK
 	}
 

@@ -46,15 +46,15 @@ func main() {
 	/* Exit status */
 	switch status {
 	case 0:
-		fmt.Printf("[OK] Threshold (w:%d,c:%d), login performed in %f seconds: "+msg+".\n",
+		fmt.Printf("[OK] Threshold (w:%d,c:%d), transaction performed in %f seconds: "+msg+".\n",
 			params.Warning, params.Critical, answerTime)
 		os.Exit(OK)
 	case 1:
-		fmt.Printf("[WARNING] Threshold (w:%d,c:%d), login performed in %f seconds: "+msg+".\n",
+		fmt.Printf("[WARNING] Threshold (w:%d,c:%d), transaction performed in %f seconds: "+msg+".\n",
 			params.Warning, params.Critical, answerTime)
 		os.Exit(WARNING)
 	case 2:
-		fmt.Printf("[CRITICAL] Threshold (w:%d,c:%d), login performed in %f seconds: "+msg+".\n",
+		fmt.Printf("[CRITICAL] Threshold (w:%d,c:%d), transaction performed in %f seconds: "+msg+".\n",
 			params.Warning, params.Critical, answerTime)
 		os.Exit(CRITICAL)
 	default:
