@@ -45,15 +45,15 @@ func main() {
 
 	/* Exit status */
 	switch status {
-	case 0:
+	case OK:
 		fmt.Printf("[OK] Threshold (w:%d,c:%d), transaction performed in %f seconds: "+msg+".\n",
 			params.Warning, params.Critical, answerTime)
 		os.Exit(OK)
-	case 1:
+	case WARNING:
 		fmt.Printf("[WARNING] Threshold (w:%d,c:%d), transaction performed in %f seconds: "+msg+".\n",
 			params.Warning, params.Critical, answerTime)
 		os.Exit(WARNING)
-	case 2:
+	case CRITICAL:
 		fmt.Printf("[CRITICAL] Threshold (w:%d,c:%d), transaction performed in %f seconds: "+msg+".\n",
 			params.Warning, params.Critical, answerTime)
 		os.Exit(CRITICAL)
