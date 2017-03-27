@@ -7,14 +7,6 @@ import (
 	"strconv"
 )
 
-type Defaults struct {
-	Author   string
-	Critical int
-	Repo     string
-	Version  string
-	Warning  int
-}
-
 type Params struct {
 	ConfigFile string
 	Critical   int

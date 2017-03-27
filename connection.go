@@ -8,7 +8,22 @@ import (
 	"gopkg.in/headzoo/surf.v1"
 )
 
-func login(config Config, params Params, defaults Defaults) (int, float64, string) {
+type Result struct {
+	Code    int
+	Elapsed float64
+	Msg     string
+}
+
+//func login() (Result, error) {
+//	var res Result
+//	res.Code = 0
+//	res.Elapsed = 0
+//	res.Msg = "blah"
+//	return res, nil
+//}
+
+func login(config Config, params Params, defaults Defaults) Result {
+	result := Result {Code: CRITICAL}
 
 	// Prepare the request
 	escapedSpEntityID := url.QueryEscape(config.ProviderId)
@@ -24,17 +39,23 @@ func login(config Config, params Params, defaults Defaults) (int, float64, strin
 	start := time.Now()
 	err := browser.Open(unsolicitedUrl)
 	if err != nil {
-		return CRITICAL, time.Since(start).Seconds(), "Connection failed or time out reached"
+		result.Elapsed = time.Since(start).Seconds()
+		result.Msg = "Connection failed or time out reached"
+		return result
 	}
 
 	// Submit intermediate pag
 	if len(browser.Forms()) >= 1 {
 		form := browser.Forms()[1]
 		if form != nil && form.Submit() != nil {
-			return CRITICAL, time.Since(start).Seconds(), err.Error()
+			result.Elapsed = time.Since(start).Seconds()
+			result.Msg = err.Error()
+			return result
 		}
 	} else {
-		return CRITICAL, time.Since(start).Seconds(), "Login failed (unsolicited SSO error)"
+		result.Elapsed = time.Since(start).Seconds()
+		result.Msg = "Login failed (unsolicited SSO error)"
+		return result
 	}
 
 	// Login page
@@ -43,39 +64,45 @@ func login(config Config, params Params, defaults Defaults) (int, float64, strin
 		if form != nil {
 			err = form.Set("username", config.Username)
 			if err != nil {
-				return CRITICAL, time.Since(start).Seconds(), err.Error()
+				result.Elapsed = time.Since(start).Seconds()
+				result.Msg = err.Error()
+				return result
 			}
 			err = form.Set("password", config.Password)
 			if err != nil {
-				return CRITICAL, time.Since(start).Seconds(), err.Error()
+				result.Elapsed = time.Since(start).Seconds()
+				result.Msg = err.Error()
+				return result
 			}
 			if form.Submit() != nil {
-				return CRITICAL, time.Since(start).Seconds(), err.Error()
+				result.Elapsed = time.Since(start).Seconds()
+				result.Msg = err.Error()
+				return result
 			}
 		}
 	} else {
-		return CRITICAL, time.Since(start).Seconds(), "Login failed (user/pass form not found)"
+		result.Elapsed = time.Since(start).Seconds()
+		result.Msg = "Login failed (user/pass form not found)"
+		return result
 	}
 	elapsed := time.Since(start).Seconds()
 	matched, _ := regexp.MatchString("\\bname=\"SAMLResponse\"", browser.Body())
 
 	// Exit status
-	var nagiosCode int
-	var msg string
 	switch {
 	case !matched:
-		nagiosCode = CRITICAL
-		msg = "login failed"
+		result.Code = CRITICAL
+		result.Msg = "login failed"
 	case elapsed >= float64(params.Critical):
-		nagiosCode = CRITICAL
-		msg = "login is too slow"
+		result.Code = CRITICAL
+		result.Msg = "login is too slow"
 	case elapsed >= float64(params.Warning):
-		msg = "login is slow"
-		nagiosCode = WARNING
+		result.Code = WARNING
+		result.Msg = "login is slow"
 	default:
-		msg = "login is OK"
-		nagiosCode = OK
+		result.Code = OK
+		result.Msg = "login is OK"
 	}
 
-	return nagiosCode, elapsed, msg
+	return result
 }
