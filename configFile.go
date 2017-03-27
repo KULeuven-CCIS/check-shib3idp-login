@@ -10,11 +10,12 @@ import (
 
 /* Interface with the yaml configuration file */
 type Config struct {
-	Username     string `yaml:"username,omitempty"`
-	Password     string `yaml:"password,omitempty"`
-	LoginBaseURL string `yaml:"unsolicited_login_baseurl,omitempty"`
-	ProviderId   string `yaml:"provider_id,omitempty"`
-	Shire        string `yaml:"shire,omitempty"`
+	Username        string `yaml:"username,omitempty"`
+	Password        string `yaml:"password,omitempty"`
+	LoginBaseURL    string `yaml:"unsolicited_login_baseurl,omitempty"`
+	UseLocalStorage bool   `yaml:"use_local_storage,omitempty"`
+	ProviderId      string `yaml:"provider_id,omitempty"`
+	Shire           string `yaml:"shire,omitempty"`
 }
 
 func retrieveValues(file string) (Config, error) {
@@ -67,6 +68,8 @@ username: "some_user"
 password: "some_password"
 # Base URL for unsolicited login
 unsolicited_login_baseurl: "https://idp.example.com/idp/profile/SAML2/Unsolicited/SSO"
+# Use HTML5 Local storage as ClientStoage. Defaults to false (use cookies).
+#use_local_storage: true
 # Entity ID of a service provider to login
 provider_id: "https://sp.example.com"
 # ACS url of a service provider to login

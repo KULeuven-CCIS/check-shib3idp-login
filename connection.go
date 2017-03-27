@@ -36,18 +36,20 @@ func login(config Config, params Params, defaults Defaults) Result {
 		return result
 	}
 
-	// Submit intermediate pag
-	if len(browser.Forms()) >= 1 {
-		form := browser.Forms()[1]
-		if form != nil && form.Submit() != nil {
+	// Submit intermediate page when using HTML local storage
+	if config.UseLocalStorage {
+		if len(browser.Forms()) >= 1 {
+			form := browser.Forms()[1]
+			if form != nil && form.Submit() != nil {
+				result.Elapsed = time.Since(start).Seconds()
+				result.Msg = err.Error()
+				return result
+			}
+		} else {
 			result.Elapsed = time.Since(start).Seconds()
-			result.Msg = err.Error()
+			result.Msg = "Login failed (unsolicited SSO error)"
 			return result
 		}
-	} else {
-		result.Elapsed = time.Since(start).Seconds()
-		result.Msg = "Login failed (unsolicited SSO error)"
-		return result
 	}
 
 	// Login page
@@ -77,6 +79,7 @@ func login(config Config, params Params, defaults Defaults) Result {
 		result.Msg = "Login failed (user/pass form not found)"
 		return result
 	}
+
 	elapsed := time.Since(start).Seconds()
 	matched, _ := regexp.MatchString("\\bname=\"SAMLResponse\"", browser.Body())
 
