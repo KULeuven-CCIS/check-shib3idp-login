@@ -63,6 +63,6 @@ func main() {
 
 	/* Exit status */
 	fmt.Printf("[%s] Threshold (w:%d,c:%d), transaction performed in %f seconds: %s\n",
-			rmap[result.Code], params.Warning, params.Critical, result.Elapsed, result.Msg)
+		rmap[result.Code], params.Warning, params.Critical, result.Elapsed, result.Msg)
 	os.Exit(result.Code)
 }

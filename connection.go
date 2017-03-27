@@ -14,16 +14,8 @@ type Result struct {
 	Msg     string
 }
 
-//func login() (Result, error) {
-//	var res Result
-//	res.Code = 0
-//	res.Elapsed = 0
-//	res.Msg = "blah"
-//	return res, nil
-//}
-
 func login(config Config, params Params, defaults Defaults) Result {
-	result := Result {Code: CRITICAL}
+	result := Result{Code: CRITICAL}
 
 	// Prepare the request
 	escapedSpEntityID := url.QueryEscape(config.ProviderId)
