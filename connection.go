@@ -80,7 +80,7 @@ func login(config Config, params Params, defaults Defaults) Result {
 		return result
 	}
 
-	elapsed := time.Since(start).Seconds()
+	result.Elapsed = time.Since(start).Seconds()
 	matched, _ := regexp.MatchString("\\bname=\"SAMLResponse\"", browser.Body())
 
 	// Exit status
@@ -88,10 +88,10 @@ func login(config Config, params Params, defaults Defaults) Result {
 	case !matched:
 		result.Code = CRITICAL
 		result.Msg = "login failed"
-	case elapsed >= float64(params.Critical):
+	case result.Elapsed >= float64(params.Critical):
 		result.Code = CRITICAL
 		result.Msg = "login is too slow"
-	case elapsed >= float64(params.Warning):
+	case result.Elapsed >= float64(params.Warning):
 		result.Code = WARNING
 		result.Msg = "login is slow"
 	default:
