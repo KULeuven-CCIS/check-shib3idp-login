@@ -1,6 +1,6 @@
 # check-shib3idp-login
 
-[![Build Status](https://travis-ci.org/nxadm/check-shib3idp-login.svg?branch=master)](https://travis-ci.org/nxadm/check-shib3idp-login)
+[![Build Status](https://travis-ci.org/KULeuven-CCIS/check-shib3idp-login.svg?branch=master)](https://travis-ci.org/KULeuven-CCIS/check-shib3idp-login)
 
 A Nagios/Icinga plugin to check an end-to-end user/pass login to a Shibboleth Idp3 instance. The program can also be used standalone.
 
