@@ -69,7 +69,7 @@ username: "some_user"
 password: "some_password"
 # Base URL for unsolicited login
 unsolicited_login_baseurl: "https://idp.example.com/idp/profile/SAML2/Unsolicited/SSO"
-# Use HTML5 Local storage as ClientStoage ("idp.storage.htmlLocalStorage" in idp.properties).
+# Use HTML5 Local storage as ClientStorage ("idp.storage.htmlLocalStorage" in idp.properties).
 # Defaults to false (use cookies).
 #use_local_storage: true
 # Entity ID of a service provider to login
