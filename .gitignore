@@ -24,6 +24,7 @@ _testmain.go
 *.prof
 
 _*
+.*.s??
 
 .idea/*
 *.iml
