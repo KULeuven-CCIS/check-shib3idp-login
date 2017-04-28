@@ -28,7 +28,7 @@ func login(config Config, params Params, defaults Defaults) Result {
 	browser.SetUserAgent("check-shib3idp-login/" + defaults.Version)
 
 	// Flow
-	// 1. Open it unsolicited SSO page
+	// 1. Open the unsolicited SSO page
 	start := time.Now()
 	err := browser.Open(unsolicitedUrl)
 	if err != nil {
