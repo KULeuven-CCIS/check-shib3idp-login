@@ -27,7 +27,8 @@ func login(config Config, params Params, defaults Defaults) Result {
 	//browser.SetTimeout(time.Duration(params.Critical) * time.Second)
 	browser.SetUserAgent("check-shib3idp-login/" + defaults.Version)
 
-	// Open it
+	// Flow
+	// 1. Open it unsolicited SSO page
 	start := time.Now()
 	err := browser.Open(unsolicitedUrl)
 	if err != nil {
@@ -36,7 +37,7 @@ func login(config Config, params Params, defaults Defaults) Result {
 		return result
 	}
 
-	// Submit intermediate page when using HTML local storage
+	// 2. Submit intermediate page when using HTML local storage
 	if config.UseLocalStorage {
 		if len(browser.Forms()) >= 1 {
 			form := browser.Forms()[1]
@@ -52,7 +53,7 @@ func login(config Config, params Params, defaults Defaults) Result {
 		}
 	}
 
-	// Login page
+	// 3. Login page form
 	if len(browser.Forms()) >= 1 {
 		form := browser.Forms()[1]
 		if form != nil {
@@ -80,6 +81,7 @@ func login(config Config, params Params, defaults Defaults) Result {
 		return result
 	}
 
+	// 4. Do something with the SAMLResponse
 	result.Elapsed = time.Since(start).Seconds()
 	matched, _ := regexp.MatchString("\\bname=\"SAMLResponse\"", browser.Body())
 
