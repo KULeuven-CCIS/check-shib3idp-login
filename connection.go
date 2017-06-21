@@ -6,6 +6,7 @@ import (
 	"time"
 	//"github.com/nxadm/surf" // Forking for upstream PR
 	"gopkg.in/headzoo/surf.v1"
+	"encoding/base64"
 )
 
 type Result struct {
@@ -30,6 +31,13 @@ func login(config Config, params Params, defaults Defaults) Result {
 	// Flow
 	// 1. Open the unsolicited SSO page
 	start := time.Now()
+
+	//Add credentials for basic authentication,
+	// ref https://wiki.shibboleth.net/confluence/display/IDP30/PasswordAuthnConfiguration#PasswordAuthnConfiguration-UserInterface
+	// "The first user interface layer of the flow is actually HTTP Basic authentication;
+	// if a header with credentials is supplied, the credentials are tested immediately with no prompting."
+	browser.AddRequestHeader("Authorization", "Basic "+basicAuth(config.Username, config.Password))
+
 	err := browser.Open(unsolicitedUrl)
 	if err != nil {
 		result.Elapsed = time.Since(start).Seconds()
@@ -53,35 +61,10 @@ func login(config Config, params Params, defaults Defaults) Result {
 		}
 	}
 
-	// 3. Login page form
-	if len(browser.Forms()) >= 1 {
-		form := browser.Forms()[1]
-		if form != nil {
-			err = form.Set("username", config.Username)
-			if err != nil {
-				result.Elapsed = time.Since(start).Seconds()
-				result.Msg = err.Error()
-				return result
-			}
-			err = form.Set("password", config.Password)
-			if err != nil {
-				result.Elapsed = time.Since(start).Seconds()
-				result.Msg = err.Error()
-				return result
-			}
-			if form.Submit() != nil {
-				result.Elapsed = time.Since(start).Seconds()
-				result.Msg = err.Error()
-				return result
-			}
-		}
-	} else {
-		result.Elapsed = time.Since(start).Seconds()
-		result.Msg = "Login failed (user/pass form not found)"
-		return result
-	}
+	browser.DelRequestHeader("Authorization")
 
-	// 4. Do something with the SAMLResponse
+
+	// 3. Do something with the SAMLResponse
 	result.Elapsed = time.Since(start).Seconds()
 	matched, _ := regexp.MatchString("\\bname=\"SAMLResponse\"", browser.Body())
 
@@ -102,4 +85,10 @@ func login(config Config, params Params, defaults Defaults) Result {
 	}
 
 	return result
+}
+
+
+func basicAuth(username, password string) string {
+	auth := username + ":" + password
+	return base64.StdEncoding.EncodeToString([]byte(auth))
 }
