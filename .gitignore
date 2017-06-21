@@ -28,3 +28,5 @@ _*
 
 .idea/*
 *.iml
+
+binaries/
