@@ -11,7 +11,7 @@ function build {
     if [ $GOOS = "windows" ]; then
         output+='.exe'
     fi
-    $GOOS $GOARCH go build -o $output
+    GOOS=$GOOS GOARCH=$GOARCH go build -o $output
     sha512sum $output > $output.sha512
 }
 
