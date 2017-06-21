@@ -11,13 +11,13 @@ function build {
     if [ $GOOS = "windows" ]; then
         output+='.exe'
     fi
-    go build -o $output
+    $GOOS $GOARCH go build -o $output
     sha512sum $output > $output.sha512
 }
 
 for i in ${platforms[@]}; do
     platform_split=(${i//\// })
-    export GOOS=${platform_split[0]}
-    export GOARCH=${platform_split[1]}
+    GOOS=${platform_split[0]}
+    GOARCH=${platform_split[1]}
     build $GOOS $GOARCH
 done
