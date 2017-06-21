@@ -17,7 +17,7 @@ function build {
 
 for i in ${platforms[@]}; do
     platform_split=(${i//\// })
-    GOOS=${platform_split[0]}
-    GOARCH=${platform_split[1]}
+    export GOOS=${platform_split[0]}
+    export GOARCH=${platform_split[1]}
     build $GOOS $GOARCH
 done
