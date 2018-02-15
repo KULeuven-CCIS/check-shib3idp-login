@@ -72,7 +72,7 @@ func login(config Config, params Params, defaults Defaults) Result {
 	switch {
 	case !matched:
 		result.Code = CRITICAL
-		result.Msg = "login failed"
+		result.Msg = "login failed / Reponse: " + browser.Body()
 	case result.Elapsed >= float64(params.Critical):
 		result.Code = CRITICAL
 		result.Msg = "login is too slow"
